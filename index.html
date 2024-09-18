@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Age Calculator</title>
+    <!-- <link rel="stylesheet" href="style.css"> -->
+     <style>
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #ff00ff, #00ffff, #ff00ff, #00ff00);
+            background-size: 400% 400%;
+            animation: neon 10s ease infinite;
+        }
+        
+        @keyframes neon{
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: transform 0.3s ease;
+        }
+        
+        .container:hover {
+            transform: scale(1.05);
+        }
+        
+        h1 {
+            margin-bottom: 20px;
+            color: #fff;
+            text-shadow: 0 0 10px #fff, 0 0 20px #ff00ff, 0 0 30px #ff00ff, 0 0 40px #ff00ff;
+        }
+        
+        label {
+            display: block;
+            margin: 10px 0 5px;
+            color: #fff;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        
+        }
+        
+        input {
+            width: 80%;
+            padding: 8px;
+            margin-bottom: 10px;
+            margin-left:20px;
+            margin-right:20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        
+        }
+        
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        
+        button:hover {
+            background-color: #0056b3;
+            transform: scale(1.1);
+        }
+        
+        #result {
+            margin-top: 20px;
+            font-size: 1.2em;
+            color: #fff;
+        }
+        
+     </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Age Calculator</h1>
+        <form id="ageForm">
+            <label for="dob">Date of Birth:</label>
+            <input type="date" id="dob" required>
+            <label for="tob">Time of Birth:</label>
+            <input type="time" id="tob" required>
+            <button type="button" onclick="calc()">Calculate Age</button>
+        </form>
+        <div id="result"></div>
+    </div>
+    <script>
+        function calc() {
+            const dob = new Date(document.getElementById('dob').value);
+            const tob = document.getElementById('tob').value.split(':');
+            dob.setHours(tob[0], tob[1]);
+        
+            const now = new Date();
+            const ageinseconds = now - dob;
+        
+            const years = Math.floor(ageinseconds / (1000 * 60 * 60 * 24 * 365.25));
+            const months = Math.floor((ageinseconds % (1000 * 60 * 60 * 24 * 365.25)) / (1000 * 60 * 60 * 24 * 30.44));
+            const days = Math.floor((ageinseconds % (1000 * 60 * 60 * 24 * 30.44)) / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((ageinseconds % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((ageinseconds % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((ageinseconds % (1000 * 60)) / 1000);
+        
+            document.getElementById('result').innerHTML = `You are ${years} years, ${months} months, ${days} days, ${hours} hours, ${minutes} minutes, and ${seconds} seconds old.`;
+        
+            setTimeout(calc, 1000);
+        }
+        
+    </script>
+</body>
+</html>
